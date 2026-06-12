@@ -1,0 +1,26 @@
+{
+  "_descricao": "Biblioteca de listas de peças (BOM) por modelo de display M2 Flex, extraída dos manuais de fabricação (página de Faca). Formato da peça: nome, qtd por display, onda (E/B/EB), impressão (4/4 frente+verso, 4/0 só frente), largura e altura em cm. Calibrada contra a planilha M2_Custo_Display_Automatico_Medio (corrugado/cartão/tinta batem ±2%).",
+  "constantes_custo": {
+    "corrugado_rs_kg": 7.60,
+    "cartao_rs_kg": 9.00,
+    "gramatura_corrugado_g_m2": {"E": 345, "B": 425, "EB": 615},
+    "gramatura_cartao_g_m2": {"E": 190, "B": 230, "EB": 230},
+    "perda_corte": 1.03,
+    "tinta_usd_litro": 79, "tinta_ml_m2": 6,
+    "plastificacao_rs_m2": 0.90,
+    "cola_g_m2": 6, "cola_rs_kg": 30,
+    "caixa_transporte_rs": 12.63, "clips_rs": 3.30, "mao_obra_acop_corte_rs": 1.46,
+    "faca_nova_rs": 1800,
+    "nozomi": {"prod_m_min": 50, "boca_m": 1.40, "min_h_lote": 1}
+  },
+  "modelos": {
+    "medio":     {"nome": "Automático Médio (4 prat)", "nprat": 4, "dim_cm": {"larg": 30, "prof": 30, "alt": 144}, "pecas": [["Corpo",1,"EB","4/4",89,158],["Lateral",2,"EB","4/0",77,153],["Base",1,"EB","4/0",77,94],["Prateleira",4,"EB","4/0",106,153],["Testeira",1,"E","4/0",82,155],["Triângulo",4,"E","4/0",77,155],["Frente prat.",4,"E","4/0",93,122]]},
+    "evolution": {"nome": "Evolution (4 prat)", "nprat": 4, "dim_cm": {"larg": 27, "prof": 39, "alt": 143.5}, "pecas": [["Corpo",1,"EB","4/4",97,149],["Lateral",2,"EB","4/0",74,151],["Base",1,"EB","4/0",99,77],["Prateleira",4,"EB","4/0",149,94],["Triângulo",4,"E","4/0",134,84],["Frente prat.",4,"EB","4/0",128,99],["Testeira",1,"E","4/0",134,105]]},
+    "premium":   {"nome": "Premium (4 prat)", "nprat": 4, "dim_cm": {"larg": 50, "prof": 30, "alt": 133}, "_nota": "Acessórios (prateleira depth-blank, testeira, frente, triângulo) dimensionados por analogia ao Médio escalado à largura 50cm — o manual agrupa essas peças numa única chapa sem cota individual. Estrutura (corpo/laterais/base) lida do manual.", "pecas": [["Corpo",1,"EB","4/0",105,150],["Lateral",2,"EB","4/0",69,144],["Base",1,"EB","4/0",69,91],["Prateleira",4,"EB","4/0",110,153],["Testeira",1,"E","4/0",136,114],["Frente prat.",4,"E","4/0",110,122],["Triângulo",4,"E","4/0",77,155]]},
+    "slim3":     {"nome": "Slim (3 prat)", "nprat": 3, "dim_cm": {"larg": 22.5, "prof": 31, "alt": 130}, "pecas": [["Corpo",1,"EB","4/4",75,117],["Lateral",2,"EB","4/0",69,113],["Base",1,"EB","4/0",71,89],["Prateleira",3,"EB","4/0",104,75],["Triângulo",3,"E","4/0",149,77],["Frente prat.",3,"E","4/0",155,88],["Testeira",1,"E","4/0",136,64]]},
+    "slim4":     {"nome": "Slim (4 prat)", "nprat": 4, "dim_cm": {"larg": 22.5, "prof": 31, "alt": 166}, "pecas": [["Corpo",1,"EB","4/4",75,145],["Lateral",2,"EB","4/0",69,141],["Base",1,"EB","4/0",71,89],["Prateleira",4,"EB","4/0",104,75],["Triângulo",4,"E","4/0",149,77],["Frente prat.",4,"E","4/0",155,88],["Testeira",1,"E","4/0",136,64]]},
+    "farma3":    {"nome": "Farma (3 prat)", "nprat": 3, "dim_cm": {"larg": 35, "prof": 30, "alt": 130}, "pecas": [["Corpo",1,"EB","4/4",87,119],["Lateral",2,"EB","4/0",139,113],["Base",1,"EB","4/0",95,91],["Prateleira",3,"EB","4/0",104,113],["Frente prat.",3,"E","4/0",139,75],["Testeira",1,"E","4/0",158,64],["Triângulo",3,"E","4/0",150,77]]},
+    "flash":     {"nome": "Flash Display (4 prat)", "nprat": 4, "dim_cm": {"larg": 38.5, "prof": 35.8, "alt": 145}, "pecas": [["Corpo",1,"B","4/4",126,153],["Esqueleto",1,"B","4/0",152,137],["Prateleira",4,"E","4/0",148,79],["Suporte prat.",4,"B","4/0",144,73],["Testeira",1,"E","4/0",146,64]]},
+    "flashfarm": {"nome": "Flash Farm (3 prat)", "nprat": 3, "dim_cm": {"larg": 38.5, "prof": 35.8, "alt": 103}, "pecas": [["Corpo",1,"E","4/0",150,114],["Testeira",1,"B","4/4",125,110],["Prateleira",3,"B","4/0",152,95],["Esqueleto",1,"E","4/0",109,113],["Suporte prat.",3,"B","4/0",115,123]]}
+  }
+}
