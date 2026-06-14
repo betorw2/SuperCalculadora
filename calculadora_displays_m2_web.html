@@ -216,8 +216,8 @@ input,select{padding:8px 10px;border:0.5px solid var(--color-border-secondary);b
   <div class="section">
     <div class="section-title"><i class="ti ti-adjustments" aria-hidden="true"></i> Formação de preço (markup divisor)</div>
     <div class="grid3">
-      <div class="field"><label>Lucro (%)</label><input type="number" id="lucro" value="30" step="1" min="0" max="90"></div>
-      <div class="field"><label>Comissão (%)</label><input type="number" id="comissao" value="5" step="0.5" min="0" max="40"></div>
+      <div class="field"><label>Lucro / margem (%)</label><input type="number" id="lucro" value="30" step="1" min="0" max="90" oninput="updateComissao()"></div>
+      <div class="field"><label>Comissão vendedor (%) — automática</label><input type="number" id="comissao" value="5" readonly style="background:var(--color-background-secondary);"></div>
       <div class="field"><label>Imposto (%)</label><input type="number" id="imposto" value="9" step="0.1" min="0" max="40"></div>
     </div>
     <div class="grid3" style="margin-top:10px;">
@@ -226,6 +226,7 @@ input,select{padding:8px 10px;border:0.5px solid var(--color-border-secondary);b
       <div class="field"><label>Financeiro pró-rata</label><input type="text" id="fin_out" readonly style="background:var(--color-background-secondary);"></div>
     </div>
     <div class="hint">Preço = custo industrial ÷ (1 − lucro − comissão − imposto − financeiro). Financeiro = taxa × prazo/30 (pró-rata). Frete entra como repasse, depois do markup.</div>
+    <div class="hint">A <b>comissão do vendedor é automática</b>, definida pela margem (lucro): 6% de margem para cada 1% de comissão, máximo 5% (a partir de 30% de margem). De 10% a 12% de margem → 1%; abaixo de 10% → 0%.</div>
   </div>
 
   <button class="calc-btn" onclick="calcular()"><i class="ti ti-calculator" aria-hidden="true"></i> Calcular orçamento</button>
@@ -290,6 +291,10 @@ function syncFrete(){const v=getToggle('frete-toggle');document.getElementById('
 function syncFaca(){const ex=document.getElementById('faca').value==='existente';const fv=document.getElementById('faca_valor');fv.disabled=ex;fv.style.opacity=ex?0.5:1;}
 function finFrac(){return (num('taxa_fin')/100)*(num('prazo')/30);}
 function updateFin(){document.getElementById('fin_out').value=(finFrac()*100).toFixed(2)+'%';}
+// Comissão do vendedor em função da margem (lucro): 6% de margem por 1% de comissão,
+// teto de 5% (a partir de 30%); de 10% a <12% → 1%; abaixo de 10% → 0%.
+function comissaoVendedor(m){ if(m<10) return 0; if(m<12) return 1; return Math.min(m/6,5); }
+function updateComissao(){ const c=comissaoVendedor(num('lucro')||0); document.getElementById('comissao').value=(Math.round(c*100)/100); }
 function syncCaminhao(){const t=TRUCKS[document.getElementById('caminhao').value];document.getElementById('cap_truck').value=t.cap;const vol=(t.comp*t.larg*t.alt).toFixed(1);document.getElementById('truck-hint').textContent=`${t.nome}: ${t.comp}×${t.larg}×${t.alt} m ≈ ${vol} m³. Capacidade editável conforme o flat-pack.`;}
 function buscarRota(){const o=encodeURIComponent(document.getElementById('origem').value),d=encodeURIComponent(document.getElementById('destino').value);window.open('https://www.google.com/maps/dir/'+o+'/'+d,'_blank');}
 function isLamar(){return MODELOS[document.getElementById('modelo').value].tipo==='lamar';}
@@ -340,7 +345,7 @@ function custoLamar(qtd,o){
 function initModelos(){
   const sel=document.getElementById('modelo');
   sel.innerHTML=Object.entries(MODELOS).map(([k,m],i)=>`<option value="${k}" ${i==0?'selected':''}>${m.nome}</option>`).join('');
-  renderBOM(); syncOffset(); syncFrete(); syncCaminhao(); syncFaca(); updateFin();
+  renderBOM(); syncOffset(); syncFrete(); syncCaminhao(); syncFaca(); updateFin(); updateComissao();
 }
 function renderBOM(){
   const m=MODELOS[document.getElementById('modelo').value];
@@ -410,7 +415,7 @@ function lerOpts(){
     frete:getToggle('frete-toggle'), frete_valor:num('frete_valor')||0, km:num('km_ida')||0, rs_km:num('rs_km')||0, cap:num('cap_truck')||1,
     faca_valor:num('faca_valor')||0};
 }
-function divisor(){return Math.max(0.05, 1-(num('lucro')/100+num('comissao')/100+num('imposto')/100+finFrac()));}
+function divisor(){return Math.max(0.05, 1-(num('lucro')/100+comissaoVendedor(num('lucro')||0)/100+num('imposto')/100+finFrac()));}
 
 function calcular(){
   const mk=document.getElementById('modelo').value, qtd=num('qtd')||500, o=lerOpts(), div=divisor();
@@ -466,4 +471,5 @@ function gerarProposta(){
 
 initModelos();
 </script>
+<div style="text-align:center;font-size:11px;color:var(--color-text-tertiary);padding:18px 0 6px;border-top:0.5px solid var(--color-border-tertiary);margin-top:24px;">Super Calculadora de Displays — M2 Flex · v80 · atualizada em 14/06/2026</div>
 </div></body></html>
