@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Super Calculadora de Displays — M2 Flex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/iconfont/tabler-icons.min.css">
+<style>:root{
+ --color-background-primary:#ffffff;--color-background-secondary:#f6f5f1;--color-background-tertiary:#efece5;
+ --color-background-info:#E6F1FB;--color-text-info:#185FA5;--color-background-success:#EAF3DE;
+ --color-text-primary:#1b1b18;--color-text-secondary:#6c6b63;--color-text-tertiary:#9c9a90;
+ --color-text-success:#3B6D11;--color-border-tertiary:rgba(0,0,0,.10);--color-border-secondary:rgba(0,0,0,.18);--color-border-primary:rgba(0,0,0,.28);
+ --border-radius-md:8px;--border-radius-lg:12px;--border-radius-xl:16px;--font-sans:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+*{font-family:var(--font-sans);}
+body{margin:0;background:var(--color-background-tertiary);color:var(--color-text-primary);}
+.page{max-width:760px;margin:0 auto;padding:18px 20px 40px;background:var(--color-background-tertiary);min-height:100vh;}
+input,select,button{font-family:var(--font-sans);}
+input,select{padding:8px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:#fff;color:var(--color-text-primary);width:100%;}
+.orca-header .orca-logo{background:transparent!important;width:auto!important;height:auto!important;padding:0;}
+.orca-logo-img{height:50px;width:auto;display:block;}
+.topbar{font-size:12px;color:var(--color-text-secondary);text-align:center;padding:6px 0 12px;}
+</style>
+</head><body><div class="page">
+<div class="topbar">M2 Flex · Super Calculadora de Displays — uso interno (compras / orçamento)</div>
+<h2 class="sr-only">Super Calculadora de Displays M2 Flex — orçamento por modelo real, impressão Nozomi/offset/direta com comparação, frete por rota e preço por quantidade</h2>
+
+<style>
+:root { --m2-accent: #D85A30; --m2-accent-light: #FAECE7; --m2-accent-dark: #993C1D; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.orca-wrap { padding: 1rem 0 2rem; font-size: 14px; }
+.orca-header { display: flex; align-items: center; gap: 12px; margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.orca-logo { width: 40px; height: 40px; background: var(--m2-accent); border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; }
+.orca-logo i { color: #fff; font-size: 20px; }
+.orca-title { font-size: 16px; font-weight: 500; color: var(--color-text-primary); }
+.orca-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+
+.section { margin-bottom: 1.25rem; background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; }
+.section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-secondary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 6px; }
+.section-title i { font-size: 14px; }
+.hint { font-size: 11px; color: var(--color-text-tertiary); margin-top: 8px; }
+.reco { font-size: 12px; color: var(--color-text-info); background: var(--color-background-info); padding: 8px 10px; border-radius: var(--border-radius-md); margin-bottom: 10px; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.grid4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 12px; color: var(--color-text-secondary); }
+.field input, .field select { font-size: 13px; }
+.field-full { grid-column: 1 / -1; }
+.sub-hide { display: none; }
+
+.toggle-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.toggle-btn { font-size: 12px; padding: 5px 12px; border-radius: 999px; border: 0.5px solid var(--color-border-secondary); background: var(--color-background-secondary); color: var(--color-text-secondary); cursor: pointer; transition: all 0.15s; }
+.toggle-btn.active { background: var(--m2-accent-light); border-color: var(--m2-accent); color: var(--m2-accent-dark); font-weight: 500; }
+
+.calc-btn { width: 100%; padding: 12px; background: var(--m2-accent); color: #fff; border: none; border-radius: var(--border-radius-md); font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.calc-btn:hover { background: var(--m2-accent-dark); }
+.calc-btn i { font-size: 16px; }
+.link-btn { background: none; border: none; color: var(--color-text-info); font-size: 12px; cursor: pointer; padding: 4px 0; display: inline-flex; align-items: center; gap: 4px; }
+
+.resultado { display: none; margin-top: 1.25rem; }
+.resultado.show { display: block; }
+
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 1rem; }
+.metric { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; }
+.metric-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; }
+.metric-value { font-size: 20px; font-weight: 500; color: var(--color-text-primary); }
+.metric-value.destaque { color: var(--m2-accent); }
+.metric-unit { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+
+.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+.tbl th { text-align: right; font-weight: 500; color: var(--color-text-secondary); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; padding: 7px 8px; border-bottom: 0.5px solid var(--color-border-secondary); }
+.tbl th:first-child { text-align: left; }
+.tbl td { text-align: right; padding: 7px 8px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.tbl td:first-child { text-align: left; }
+.tbl tr.sub td { background: var(--color-background-secondary); font-weight: 500; }
+.tbl tr.tot td { background: var(--m2-accent-light); color: var(--m2-accent-dark); font-weight: 500; }
+.tbl tr.atual td { background: var(--m2-accent-light); color: var(--m2-accent-dark); }
+.tbl td.eco { color: var(--color-text-success); font-size: 12px; }
+.tbl td.win { color: var(--color-text-success); font-weight: 500; }
+
+.dolar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; }
+.dolar-row label { font-size: 12px; color: var(--color-text-secondary); white-space: nowrap; }
+.dolar-row input { width: 90px; font-size: 13px; }
+.dolar-badge { font-size: 11px; padding: 3px 8px; background: var(--color-background-info); color: var(--color-text-info); border-radius: 999px; }
+</style>
+
+<div class="orca-wrap">
+  <div class="orca-header">
+    <img class="orca-logo-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOMAAABWCAYAAAA9iSGKAAAEaElEQVR4nO2dWW7jQAwF5cGcxEDuf6AAvornIxDiURRr4/LIrjqA1WyymnJruz2fzwkA8vmTPQAA+AIZAURARgARkBFABGQEEAEZAURARgAR/mYPAPpwv38cvmj9eHzePMZSkRsX/eEMZ8Tbw8hyIiPsxkvA3xhNTGSEt0QLuMYoUiIjrKIg4ZLuUpaQcaswKiVpT5Fnx6Mo4kz23HgiK+PZglBNVpWdRmURX1HN8xXkZLQoBqVEVYqniogzSnm2QEZG60JQSFSlmKqJOE0aObZE4g4cj0LILq6OManRbT7SZfSc0KxkdYxJlU7zkSpjxERGJ6tiTJ0KujLpnTECiq03XfKbJmOXCXwlMqaO8zc6PLUB0+Pxebsq99bOpvficb9/PKvvrqZc2sha1TteGrCKKeqmBM95qi7jEP8ZwZ6zhf94fN6qS+NFuIyZ/3U6/s/KeKzJQiaE/Amd0YAOku+Rw1oghPyf0A2cDkU7IkgTw3CdseMFc6sxrEnnLSKifzOcjPCeVzkQJZYwGRU6yIzVWDrGNE3seGZBZwQQIURGpQ4CWlAb3wzbGa8WgWIRKY4J9jOsjJCP9f9cq9/Kwl1G5dX67Ng6xhRNlXFGQmeEcBBxHVcZmXRY4lETHU5Rp4nOeLg4KiwwqmNExPfwcDG4o7o4qOHWGSslYO9YO8bkDQ8T76fUaWrH27Q6xjSDiMdwkVFlVa5Ep+K63z+eiHicMp3R+2mCreKpuPmQsSh6H7OriNNUSMYRqF5oiHgN87fDRXaQqGN1jMkSJLSBzgiXQEQ7TGWMXtWrJqpLTIhoC51xwbLAOuwMe7z3BxHtQcYV5kKr/pZwDyLmRDl+T8w2cDI3Hip1r8yYrhZ5RRH3jFlFfu5NhU2qSFhpUV5DVsYjybH4ilIEFWNSFLHrGwJMZFQoGtjmyGfTonL6bjyj1ZVsZ4S87shHX3O4vJuqstGgdLqxhsr4Mu7BVUUlJzN0RpimaSwJVbl8acM6iRW234+iGNPrmBTnzJuM+3W3jnmpM46YxC6QOzu25nKv+JymFkDlMkcXrnTFI3k4epzTMqps3Kz9hlLhqm0SwH7O1tHZnNMZYTiW11s9PzZ7hNMbOGobN0sUumPHmOAnVnk+1RkpChgdj78fEo9Q8b9qH8xTPp6v1jwsY5WumF242ccHWyLebyvRGWE/SB5L5Eum02X0DDSrcBGmPhlvej+0gVPlFBV6EfmYVeZCmnqdMSJwtZsALOgY00yGDCpnMrtl7Jp8a6IS20HIbAmyj78krTNGTkSHwq1OxvdRIsdiQYqMqpNxlei4VBcZ1fyqjmtm1+1wXV4A1PUzZZlCVohbXcKZ0M6YPSlenaRrXGvH8T6GJdXGu9kZVe5ot6RLp1/SNa41fotVfdzvcO+MipMzj+lq8arFdiUutViOUn380+QkY5WJOfNMW4XY3n37scL4j9ApHvOPpQLAOdLvTQWAL5ARQARkBBABGQFEQEYAEZARQARkBBDhHwB54ONDUfnqAAAAAElFTkSuQmCC" alt="M2 Flex">
+    <div>
+      <div class="orca-title">Super Calculadora de Displays — M2 Flex</div>
+      <div class="orca-sub">BOM real dos manuais · custo calibrado · Nozomi × offset · frete</div>
+    </div>
+  </div>
+
+  <div class="dolar-row">
+    <label>Dólar hoje (R$):</label>
+    <input type="number" id="dolar" value="5.80" step="0.01" min="1">
+    <span class="dolar-badge">tinta Nozomi é cotada em US$</span>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><i class="ti ti-box" aria-hidden="true"></i> Modelo e pedido</div>
+    <div class="grid2">
+      <div class="field field-full">
+        <label>Modelo de display</label>
+        <select id="modelo" onchange="renderBOM()"></select>
+      </div>
+      <div class="field"><label>Quantidade (unid.)</label><input type="number" id="qtd" value="500" min="1"></div>
+      <div class="field"><label>Faca</label>
+        <select id="faca" onchange="syncFaca()"><option value="nova" selected>Nova (informar valor)</option><option value="existente">Existente (R$ 0)</option></select>
+      </div>
+      <div class="field"><label>Valor da faca (R$)</label><input type="number" id="faca_valor" value="1800" step="50" min="0"></div>
+    </div>
+    <div class="hint" id="modelo-dim"></div>
+  </div>
+
+  <div class="section" id="bom-section">
+    <div class="section-title"><i class="ti ti-list-details" aria-hidden="true"></i> Peças do modelo (do manual)</div>
+    <table class="tbl"><thead><tr><th>Peça</th><th>Qtd</th><th>Onda</th><th>Imp.</th><th>Formato (cm)</th><th>m²/display</th></tr></thead><tbody id="bom-body"></tbody></table>
+  </div>
+
+  <div class="section sub-hide" id="lamar-section">
+    <div class="section-title"><i class="ti ti-rulers" aria-hidden="true"></i> Parâmetros do Lamá (auditável)</div>
+    <div class="grid4" style="margin-bottom:8px;">
+      <div class="field"><label>Cartão (g/m²)</label><input type="number" id="lm_cart_g" value="312" step="1"></div>
+      <div class="field"><label>Cartão (R$/kg)</label><input type="number" id="lm_cart_kg" value="9" step="0.1"></div>
+      <div class="field"><label>Bobina cartão (m)</label><input type="number" id="lm_bobina" value="1.34" step="0.01"></div>
+      <div class="field"><label>Corte cartão (m)</label><input type="number" id="lm_corte" value="1.96" step="0.01"></div>
+    </div>
+    <div class="grid4" style="margin-bottom:8px;">
+      <div class="field"><label>Impressão larg. (m)</label><input type="number" id="lm_pl" value="1.24" step="0.01"></div>
+      <div class="field"><label>Impressão alt. (m)</label><input type="number" id="lm_pa" value="1.90" step="0.01"></div>
+      <div class="field"><label>Nozomi (m/min)</label><input type="number" id="lm_noz" value="40" step="1"></div>
+      <div class="field"><label>Corte/vinco (fls/h)</label><input type="number" id="lm_cv" value="500" step="10"></div>
+    </div>
+    <div class="grid4" style="margin-bottom:8px;">
+      <div class="field"><label>PVC cristal (R$/m²)</label><input type="number" id="lm_pvc_m2" value="25.82" step="0.1"></div>
+      <div class="field"><label>PVC pç (cm L×A)</label><input type="text" id="lm_pvc_d" value="58x6"></div>
+      <div class="field"><label>PVC qtd</label><input type="number" id="lm_pvc_n" value="2" step="1"></div>
+      <div class="field"><label>Acerto C/V (folhas)</label><input type="number" id="lm_cvac" value="100" step="10"></div>
+    </div>
+    <div class="grid4" style="margin-bottom:8px;">
+      <div class="field"><label>Elástico (R$/un)</label><input type="number" id="lm_elast" value="0.30" step="0.05"></div>
+      <div class="field"><label>Elástico qtd</label><input type="number" id="lm_elast_n" value="2" step="1"></div>
+      <div class="field"><label>Fita Tesa (R$/m)</label><input type="number" id="lm_fita_rm" value="1.50" step="0.05"></div>
+      <div class="field"><label>Fita pç (cm) × qtd</label><input type="text" id="lm_fita_d" value="4x2"></div>
+    </div>
+    <div class="grid4">
+      <div class="field"><label>Suporte E (cm L×A) ×qtd</label><input type="text" id="lm_sup_d" value="10x20x2"></div>
+      <div class="field"><label>Cola (m lin.) · g/m</label><input type="text" id="lm_cola_d" value="2.20x5"></div>
+      <div class="field"><label>Caixa indiv. (R$) EST.</label><input type="number" id="lm_caixa" value="4.48" step="0.1"></div>
+      <div class="field"><label>Montagem (R$) EST.</label><input type="number" id="lm_montagem" value="3.50" step="0.1"></div>
+    </div>
+    <div class="hint">Itens "EST." são estimativas. Edite qualquer campo e clique em Calcular para auditar cada parte.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><i class="ti ti-printer" aria-hidden="true"></i> Impressão / acabamento</div>
+    <div class="toggle-row" id="impr-toggle" style="margin-bottom:10px;">
+      <button class="toggle-btn active" data-val="nozomi" onclick="toggleBtn(this,'impr-toggle');syncOffset()">Nozomi + cartão acoplado</button>
+      <button class="toggle-btn" data-val="offset" onclick="toggleBtn(this,'impr-toggle');syncOffset()">Offset contracolado</button>
+      <button class="toggle-btn" data-val="direta" onclick="toggleBtn(this,'impr-toggle');syncOffset()">Impressão direta</button>
+      <button class="toggle-btn" data-val="sem" onclick="toggleBtn(this,'impr-toggle');syncOffset()">Sem impressão</button>
+    </div>
+    <div class="sub-hide" id="offset-params">
+      <div class="grid4" style="margin-bottom:8px;">
+        <div class="field"><label>Aproveit. folha (%)</label><input type="number" id="off_aprov" value="82" step="1" min="30" max="100"></div>
+        <div class="field"><label>Chapa (R$)</label><input type="number" id="off_chapa" value="300" step="10" min="0"></div>
+        <div class="field"><label>Nº de cores</label><input type="number" id="off_cores" value="4" step="1" min="1" max="8"></div>
+        <div class="field"><label>Acerto/entrada (R$)</label><input type="number" id="off_acerto" value="600" step="50" min="0"></div>
+      </div>
+      <div class="grid3">
+        <div class="field"><label>Milheiro impressão (R$)</label><input type="number" id="off_milheiro" value="1200" step="50" min="0"></div>
+        <div class="field"><label>Perda/entrada (folhas)</label><input type="number" id="off_perda" value="150" step="10" min="0"></div>
+        <div class="field"><label>Arte/fotolito (R$)</label><input type="number" id="off_arte" value="500" step="50" min="0"></div>
+      </div>
+    </div>
+    <div class="toggle-row" id="acab-toggle" style="margin-top:10px;">
+      <button class="toggle-btn" data-val="brilho" onclick="toggleBtn(this,'acab-toggle')">Plastificação brilho</button>
+      <button class="toggle-btn" data-val="fosco" onclick="toggleBtn(this,'acab-toggle')">Plastificação fosca</button>
+      <button class="toggle-btn active" data-val="sem" onclick="toggleBtn(this,'acab-toggle')">Sem plastificação</button>
+    </div>
+    <div class="hint" id="offset-hint"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><i class="ti ti-truck" aria-hidden="true"></i> Frete</div>
+    <div class="toggle-row" id="frete-toggle" style="margin-bottom:10px;">
+      <button class="toggle-btn active" data-val="retira" onclick="toggleBtn(this,'frete-toggle');syncFrete()">Retira na fábrica</button>
+      <button class="toggle-btn" data-val="direto" onclick="toggleBtn(this,'frete-toggle');syncFrete()">Valor direto</button>
+      <button class="toggle-btn" data-val="rota" onclick="toggleBtn(this,'frete-toggle');syncFrete()">Calcular por rota</button>
+    </div>
+    <div class="sub-hide" id="frete-direto">
+      <div class="field"><label>Frete total da entrega (R$)</label><input type="number" id="frete_valor" value="0" step="10" min="0"></div>
+    </div>
+    <div class="sub-hide" id="frete-rota">
+      <div class="grid2" style="margin-bottom:10px;">
+        <div class="field"><label>Origem (fábrica)</label><input type="text" id="origem" value="São Paulo, SP"></div>
+        <div class="field"><label>Destino (entrega)</label><input type="text" id="destino" value="Rio de Janeiro, RJ"></div>
+      </div>
+      <button class="link-btn" onclick="buscarRota()"><i class="ti ti-map-search" aria-hidden="true"></i> Buscar km da rota na web ↗</button>
+      <div class="grid4" style="margin-top:8px;">
+        <div class="field"><label>Distância ida (km)</label><input type="number" id="km_ida" value="430" step="1" min="0"></div>
+        <div class="field"><label>Tarifa (R$/km)</label><input type="number" id="rs_km" value="1.80" step="0.05" min="0"></div>
+        <div class="field"><label>Caminhão</label>
+          <select id="caminhao" onchange="syncCaminhao()"><option value="branco" selected>Branco — baú 6m</option><option value="amarelo">Amarelo — 10m</option></select>
+        </div>
+        <div class="field"><label>Displays por caminhão</label><input type="number" id="cap_truck" value="340" step="1" min="1"></div>
+      </div>
+      <div class="hint" id="truck-hint"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><i class="ti ti-adjustments" aria-hidden="true"></i> Formação de preço (markup divisor)</div>
+    <div class="grid3">
+      <div class="field"><label>Lucro (%)</label><input type="number" id="lucro" value="30" step="1" min="0" max="90"></div>
+      <div class="field"><label>Comissão (%)</label><input type="number" id="comissao" value="5" step="0.5" min="0" max="40"></div>
+      <div class="field"><label>Imposto (%)</label><input type="number" id="imposto" value="9" step="0.1" min="0" max="40"></div>
+    </div>
+    <div class="grid3" style="margin-top:10px;">
+      <div class="field"><label>Taxa financeira (%/30 dias)</label><input type="number" id="taxa_fin" value="2" step="0.1" min="0" max="20" oninput="updateFin()"></div>
+      <div class="field"><label>Prazo de pagamento (dias)</label><input type="number" id="prazo" value="28" step="1" min="0" oninput="updateFin()"></div>
+      <div class="field"><label>Financeiro pró-rata</label><input type="text" id="fin_out" readonly style="background:var(--color-background-secondary);"></div>
+    </div>
+    <div class="hint">Preço = custo industrial ÷ (1 − lucro − comissão − imposto − financeiro). Financeiro = taxa × prazo/30 (pró-rata). Frete entra como repasse, depois do markup.</div>
+  </div>
+
+  <button class="calc-btn" onclick="calcular()"><i class="ti ti-calculator" aria-hidden="true"></i> Calcular orçamento</button>
+
+  <div class="resultado" id="resultado">
+    <div class="section" style="margin-top:1.25rem;">
+      <div class="section-title"><i class="ti ti-chart-bar" aria-hidden="true"></i> Resumo (na quantidade informada)</div>
+      <div class="metrics" id="metrics"></div>
+      <table class="tbl"><tbody id="breakdown"></tbody></table>
+    </div>
+    <div class="section" id="cmp-section">
+      <div class="section-title"><i class="ti ti-versions" aria-hidden="true"></i> Nozomi × Offset (preço unit., mesmo pedido)</div>
+      <div class="reco" id="reco"></div>
+      <table class="tbl"><thead><tr><th>Qtde</th><th>Nozomi/un</th><th>Offset/un</th><th>Mais barato</th></tr></thead><tbody id="cmpbody"></tbody></table>
+    </div>
+    <div class="section">
+      <div class="section-title"><i class="ti ti-stack-2" aria-hidden="true"></i> Preço por quantidade (método selecionado)</div>
+      <table class="tbl"><thead><tr><th>Qtde</th><th>Custo unit.</th><th>Frete unit.</th><th>Preço unit.</th><th>Preço total</th><th>vs. menor</th></tr></thead><tbody id="qbody"></tbody></table>
+      <div class="hint">Faca, mínimo de 1h da Nozomi, chapas/acerto de offset e viagens de caminhão são custos de lote — diluem com a quantidade.</div>
+    </div>
+    <button class="calc-btn" style="background:var(--color-background-secondary);color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary);margin-top:0.75rem;" onclick="gerarProposta()">
+      <i class="ti ti-file-text" aria-hidden="true"></i> Gerar memorial / proposta completa em PDF ↗
+    </button>
+  </div>
+</div>
+
+<script>
+const MODELOS = {
+ medio:    {nome:"Automático Médio (4 prat)", nprat:4, dim:{l:30,p:30,a:144}, pecas:[["Corpo",1,"EB","4/4",89,158],["Lateral",2,"EB","4/0",77,153],["Base",1,"EB","4/0",77,94],["Prateleira",4,"EB","4/0",106,153],["Testeira",1,"E","4/0",82,155],["Triângulo",4,"E","4/0",77,155],["Frente prat.",4,"E","4/0",93,122]]},
+ evolution:{nome:"Evolution (4 prat)", nprat:4, dim:{l:27,p:39,a:143.5}, pecas:[["Corpo",1,"EB","4/4",97,149],["Lateral",2,"EB","4/0",74,151],["Base",1,"EB","4/0",99,77],["Prateleira",4,"EB","4/0",149,94],["Triângulo",4,"E","4/0",134,84],["Frente prat.",4,"EB","4/0",128,99],["Testeira",1,"E","4/0",134,105]]},
+ premium:  {nome:"Premium (4 prat)", nprat:4, dim:{l:50,p:30,a:133}, pecas:[["Corpo",1,"EB","4/0",105,150],["Lateral",2,"EB","4/0",69,144],["Base",1,"EB","4/0",69,91],["Prateleira",4,"EB","4/0",110,153],["Testeira",1,"E","4/0",136,114],["Frente prat.",4,"E","4/0",110,122],["Triângulo",4,"E","4/0",77,155]]},
+ slim3:    {nome:"Slim (3 prat)", nprat:3, dim:{l:22.5,p:31,a:130}, pecas:[["Corpo",1,"EB","4/4",75,117],["Lateral",2,"EB","4/0",69,113],["Base",1,"EB","4/0",71,89],["Prateleira",3,"EB","4/0",104,75],["Triângulo",3,"E","4/0",149,77],["Frente prat.",3,"E","4/0",155,88],["Testeira",1,"E","4/0",136,64]]},
+ slim4:    {nome:"Slim (4 prat)", nprat:4, dim:{l:22.5,p:31,a:166}, pecas:[["Corpo",1,"EB","4/4",75,145],["Lateral",2,"EB","4/0",69,141],["Base",1,"EB","4/0",71,89],["Prateleira",4,"EB","4/0",104,75],["Triângulo",4,"E","4/0",149,77],["Frente prat.",4,"E","4/0",155,88],["Testeira",1,"E","4/0",136,64]]},
+ farma3:   {nome:"Farma (3 prat)", nprat:3, dim:{l:35,p:30,a:130}, pecas:[["Corpo",1,"EB","4/4",87,119],["Lateral",2,"EB","4/0",139,113],["Base",1,"EB","4/0",95,91],["Prateleira",3,"EB","4/0",104,113],["Frente prat.",3,"E","4/0",139,75],["Testeira",1,"E","4/0",158,64],["Triângulo",3,"E","4/0",150,77]]},
+ flash:    {nome:"Flash Display (4 prat)", nprat:4, dim:{l:38.5,p:35.8,a:145}, pecas:[["Corpo",1,"B","4/4",126,153],["Esqueleto",1,"B","4/0",152,137],["Prateleira",4,"E","4/0",148,79],["Suporte prat.",4,"B","4/0",144,73],["Testeira",1,"E","4/0",146,64]]},
+ flashfarm:{nome:"Flash Farm (3 prat)", nprat:3, dim:{l:38.5,p:35.8,a:103}, pecas:[["Corpo",1,"E","4/0",150,114],["Testeira",1,"B","4/4",125,110],["Prateleira",3,"B","4/0",152,95],["Esqueleto",1,"E","4/0",109,113],["Suporte prat.",3,"B","4/0",115,123]]},
+ lamar:    {nome:"Display Lamá (elíptico, avulso)", tipo:"lamar", nprat:0, dim:{l:60,p:0,a:190}},
+};
+// parâmetros padrão do Lamá (editáveis no painel)
+const LAMAR={cart_g:312,cart_kg:9,bobina:1.34,corte:1.96,pl:1.24,pa:1.90,noz_mmin:40,
+ pvc_m2:25.82,pvc_n:2,pvc_l:58,pvc_w:6,elast:0.30,elast_n:2,fita_rm:1.50,fita_n:2,fita_len:4,
+ cola_m:2.20,cola_gm:5,sup_n:2,sup_l:10,sup_a:20,caixa:4.48,montagem:3.50,cv_fls:500,cv_acerto:100};
+const GRAM={E:345,B:425,EB:615}, CART_G={E:190,B:230,EB:230};
+const TRUCKS={branco:{nome:"Branco (baú 6m)", comp:6, larg:2.30, alt:2.60, cap:340}, amarelo:{nome:"Amarelo (10m)", comp:10, larg:2.30, alt:2.65, cap:575}};
+const FOLHA_UTIL=1.09*0.60; // offset 109x60 cm útil
+const C={corr_kg:7.60, cart_kg:9.00, perda:1.03, tinta_usd_l:79, tinta_ml_m2:6,
+  plast_m2:0.90, cola_g_m2:6, cola_kg:30, caixa:12.63, clip_par:0.55, mo:1.46, faca:1800,
+  noz:{dep:(18000000-4500000)/7/12, manut:20000, op:3000, aj:2000, enc:0.70, m_min:50, boca:1.40, min_h:1}};
+
+function fmt(v){return 'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function getToggle(id){const b=document.querySelector('#'+id+' .toggle-btn.active');return b?b.dataset.val:'';}
+function toggleBtn(el,g){document.querySelectorAll('#'+g+' .toggle-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');}
+function num(id){return parseFloat(document.getElementById(id).value);}
+
+function syncOffset(){
+  const v=getToggle('impr-toggle');
+  document.getElementById('offset-params').className=(v==='offset'?'':'sub-hide');
+  const h={nozomi:'Nozomi digital sobre cartão contracolado no corrugado.',offset:'Offset em folha 120×60 cm (útil 109×60); chapas, acerto, arte e perda de folhas entram como custo de lote. Cada parte impressa = uma entrada (4/4 conta 2).',direta:'Impressão direta no corrugado (sem cartão).',sem:'Sem impressão (corrugado pardo).'}[v];
+  document.getElementById('offset-hint').textContent=h||'';
+}
+function syncFrete(){const v=getToggle('frete-toggle');document.getElementById('frete-direto').className=(v==='direto'?'':'sub-hide');document.getElementById('frete-rota').className=(v==='rota'?'':'sub-hide');}
+function syncFaca(){const ex=document.getElementById('faca').value==='existente';const fv=document.getElementById('faca_valor');fv.disabled=ex;fv.style.opacity=ex?0.5:1;}
+function finFrac(){return (num('taxa_fin')/100)*(num('prazo')/30);}
+function updateFin(){document.getElementById('fin_out').value=(finFrac()*100).toFixed(2)+'%';}
+function syncCaminhao(){const t=TRUCKS[document.getElementById('caminhao').value];document.getElementById('cap_truck').value=t.cap;const vol=(t.comp*t.larg*t.alt).toFixed(1);document.getElementById('truck-hint').textContent=`${t.nome}: ${t.comp}×${t.larg}×${t.alt} m ≈ ${vol} m³. Capacidade editável conforme o flat-pack.`;}
+function buscarRota(){const o=encodeURIComponent(document.getElementById('origem').value),d=encodeURIComponent(document.getElementById('destino').value);window.open('https://www.google.com/maps/dir/'+o+'/'+d,'_blank');}
+function isLamar(){return MODELOS[document.getElementById('modelo').value].tipo==='lamar';}
+function showLamar(){const L=isLamar();
+  document.getElementById('bom-section').className='section'+(L?' sub-hide':'');
+  document.getElementById('lamar-section').className='section'+(L?'':' sub-hide');
+  const c=document.getElementById('cmp-section'); if(c) c.style.display=L?'none':'';
+}
+function pp(id){return document.getElementById(id).value.toLowerCase().split('x').map(parseFloat);}
+function lamarParams(){const pvc=pp('lm_pvc_d'),fita=pp('lm_fita_d'),sup=pp('lm_sup_d'),cola=pp('lm_cola_d');
+  return {cart_g:num('lm_cart_g'),cart_kg:num('lm_cart_kg'),bobina:num('lm_bobina'),corte:num('lm_corte'),
+   pl:num('lm_pl'),pa:num('lm_pa'),noz:num('lm_noz'),cv:num('lm_cv'),cvac:num('lm_cvac'),
+   pvc_m2:num('lm_pvc_m2'),pvc_l:pvc[0],pvc_w:pvc[1],pvc_n:num('lm_pvc_n'),
+   elast:num('lm_elast'),elast_n:num('lm_elast_n'),fita_rm:num('lm_fita_rm'),fita_len:fita[0],fita_n:fita[1],
+   sup_l:sup[0],sup_a:sup[1],sup_n:sup[2],cola_m:cola[0],cola_gm:cola[1],caixa:num('lm_caixa'),montagem:num('lm_montagem')};
+}
+function custoLamar(qtd,o){
+  const p=lamarParams();
+  const cartao=p.bobina*p.corte*p.cart_g/1000*p.cart_kg;
+  const area_print=p.pl*p.pa;
+  const tinta=area_print*C.tinta_ml_m2/1000*C.tinta_usd_l*o.dolar;
+  const pvc=p.pvc_n*(p.pvc_l*p.pvc_w/10000)*p.pvc_m2;
+  const elast=p.elast_n*p.elast;
+  const fita=p.fita_n*(p.fita_len/100)*p.fita_rm;
+  const supArea=p.sup_n*(p.sup_l*p.sup_a/10000)*C.perda;
+  const suporte=supArea*GRAM.E/1000*C.corr_kg;
+  const cola=p.cola_m*p.cola_gm/1000*C.cola_kg;
+  const cvh=(C.noz.op+C.noz.aj)*(1+C.noz.enc)/(22*8*3);
+  const cv_u=(1/p.cv)*cvh;
+  const var_u=cartao+tinta+pvc+elast+fita+suporte+cola+p.caixa+p.montagem+cv_u;
+  const chn=(C.noz.dep+C.noz.manut+(C.noz.op+C.noz.aj)*(1+C.noz.enc))/(22*8*3);
+  const th=area_print*qtd/(p.noz*C.noz.boca*60); const c_noz=Math.max(th,C.noz.min_h)*chn;
+  const c_cvac=(p.cvac/p.cv)*cvh;
+  const c_faca=o.faca==='nova'?o.faca_valor:0;
+  const ci=var_u*qtd + c_noz + c_cvac + c_faca;
+  let frete_tot=0;
+  if(o.frete==='direto') frete_tot=o.frete_valor;
+  else if(o.frete==='rota'){const v=Math.ceil(qtd/Math.max(1,o.cap));frete_tot=v*(2*o.km*o.rs_km);}
+  const frete_u=frete_tot/qtd;
+  const g={area_corr:supArea,peso:supArea*GRAM.E/1000,area_print:area_print,ent:0,nprat:0};
+  return {g,ci,ci_u:ci/qtd,c_noz,off_fixo:0,c_faca,frete_tot,frete_u,
+    comp:[["Papel cartão "+p.cart_g+"g (folha "+p.bobina+"×"+p.corte+")",cartao*qtd],["Tinta UV Nozomi",tinta*qtd],
+     ["PVC cristal",pvc*qtd],["Elástico",elast*qtd],["Fita Tesa",fita*qtd],["Suporte papelão E",suporte*qtd],
+     ["Cola hot melt (EST.)",cola*qtd],["Caixa individual (EST.)",p.caixa*qtd],["Montagem (EST.)",p.montagem*qtd],
+     ["Corte/vinco (MO)",cv_u*qtd],["Hora-máquina Nozomi (lote)",c_noz],["Acerto corte/vinco (lote)",c_cvac],["Faca (lote)",c_faca]].filter(r=>r[1]>0)};
+}
+
+function initModelos(){
+  const sel=document.getElementById('modelo');
+  sel.innerHTML=Object.entries(MODELOS).map(([k,m],i)=>`<option value="${k}" ${i==0?'selected':''}>${m.nome}</option>`).join('');
+  renderBOM(); syncOffset(); syncFrete(); syncCaminhao(); syncFaca(); updateFin();
+}
+function renderBOM(){
+  const m=MODELOS[document.getElementById('modelo').value];
+  showLamar();
+  if(m.tipo==='lamar'){ document.getElementById('modelo-dim').textContent='Lamá elíptico dobrável · fechado 60×190 cm · aberto '+num('lm_pl')+'×'+num('lm_pa')+' m · cartão '+num('lm_cart_g')+'g'; return; }
+  document.getElementById('modelo-dim').textContent=`Dimensões aprox.: ${m.dim.l}×${m.dim.p}×${m.dim.a} cm · ${m.nprat} prateleiras`;
+  document.getElementById('bom-body').innerHTML=m.pecas.map(([nm,q,onda,imp,L,A])=>{
+    const a=(L*A/10000)*q*C.perda;
+    return `<tr><td>${nm}</td><td>${q}</td><td>${onda}</td><td>${imp}</td><td>${L}×${A}</td><td>${a.toFixed(3)}</td></tr>`;
+  }).join('');
+}
+
+function geo(mk){
+  const m=MODELOS[mk]; let area_corr=0,peso=0,area_print=0,cart_cost=0,ent=0;
+  m.pecas.forEach(([nm,q,onda,imp,L,A])=>{
+    const a=(L*A/10000)*q*C.perda;
+    area_corr+=a; peso+=a*GRAM[onda]/1000;
+    area_print+=a*(imp==="4/4"?2:1);
+    cart_cost+=a*CART_G[onda]/1000*C.cart_kg;
+    ent+=(imp==="4/4"?2:1);
+  });
+  return {area_corr,peso,area_print,cart_cost,ent,nprat:m.nprat};
+}
+
+function custoLote(mk,qtd,o){
+  if(MODELOS[mk].tipo==='lamar') return custoLamar(qtd,o);
+  const g=geo(mk);
+  const acopla=(o.impr==='nozomi'||o.impr==='offset');
+  const c_corr=g.peso*C.corr_kg;
+  const c_cart=acopla?g.cart_cost:0;
+  const c_tinta=(o.impr==='nozomi'||o.impr==='direta')?g.area_print*C.tinta_ml_m2/1000*C.tinta_usd_l*o.dolar:0;
+  const c_plast=(o.acab!=='sem'&&o.impr!=='sem')?g.area_print*C.plast_m2:0;
+  const c_cola=g.area_corr*C.cola_g_m2/1000*C.cola_kg;
+  const c_clip=g.nprat*1.5*C.clip_par;
+
+  // offset (por folha)
+  let off_var=0, off_fixo=0;
+  if(o.impr==='offset'){
+    const folhas_disp=g.area_print/(FOLHA_UTIL*(o.off_aprov/100));
+    off_var=folhas_disp*o.off_milheiro/1000;
+    off_fixo=o.off_cores*o.off_chapa*g.ent + o.off_acerto*g.ent + o.off_arte + o.off_perda*g.ent*o.off_milheiro/1000;
+  }
+
+  const var_u=c_corr+c_cart+c_tinta+c_plast+c_cola+c_clip+C.mo+C.caixa+off_var;
+
+  const hm=22*8*3, chn=(C.noz.dep+C.noz.manut+(C.noz.op+C.noz.aj)*(1+C.noz.enc))/hm;
+  let c_noz=0; if(o.impr==='nozomi'||o.impr==='direta'){const th=(g.area_print*qtd)/(C.noz.m_min*C.noz.boca*60); c_noz=Math.max(th,C.noz.min_h)*chn;}
+  const c_faca=o.faca==='nova'?o.faca_valor:0;
+  const ci=var_u*qtd + c_noz + off_fixo + c_faca;
+
+  let frete_tot=0;
+  if(o.frete==='direto'){ frete_tot=o.frete_valor; }
+  else if(o.frete==='rota'){ const viagens=Math.ceil(qtd/Math.max(1,o.cap)); frete_tot=viagens*(2*o.km*o.rs_km); }
+  const frete_u=frete_tot/qtd;
+
+  return {g, ci, ci_u:ci/qtd, c_noz, off_fixo, c_faca, frete_tot, frete_u,
+    comp:[["Corrugado",c_corr*qtd],["Cartão acoplado",c_cart*qtd],["Tinta Nozomi",c_tinta*qtd],
+      ["Offset (impressão)",off_var*qtd],["Plastificação",c_plast*qtd],["Cola hotmelt",c_cola*qtd],["Clips",c_clip*qtd],
+      ["Mão de obra (acop+corte)",C.mo*qtd],["Caixa de transporte",C.caixa*qtd],
+      ["Hora-máquina Nozomi (lote)",c_noz],["Offset chapas+acerto+arte (lote)",off_fixo],["Faca (lote)",c_faca]].filter(r=>r[1]>0)};
+}
+
+function lerOpts(){
+  return {dolar:num('dolar')||5.80, impr:getToggle('impr-toggle'), acab:getToggle('acab-toggle'), faca:document.getElementById('faca').value,
+    off_aprov:num('off_aprov')||82, off_chapa:num('off_chapa')||0, off_cores:num('off_cores')||1, off_acerto:num('off_acerto')||0,
+    off_milheiro:num('off_milheiro')||0, off_perda:num('off_perda')||0, off_arte:num('off_arte')||0,
+    frete:getToggle('frete-toggle'), frete_valor:num('frete_valor')||0, km:num('km_ida')||0, rs_km:num('rs_km')||0, cap:num('cap_truck')||1,
+    faca_valor:num('faca_valor')||0};
+}
+function divisor(){return Math.max(0.05, 1-(num('lucro')/100+num('comissao')/100+num('imposto')/100+finFrac()));}
+
+function calcular(){
+  const mk=document.getElementById('modelo').value, qtd=num('qtd')||500, o=lerOpts(), div=divisor();
+  const r=custoLote(mk,qtd,o);
+  const preco_base=r.ci_u/div, preco_u=preco_base+r.frete_u, preco_tot=preco_u*qtd;
+
+  document.getElementById('metrics').innerHTML=`
+    <div class="metric"><div class="metric-label">Custo industrial total</div><div class="metric-value">${fmt(r.ci)}</div><div class="metric-unit">${qtd} unidades</div></div>
+    <div class="metric"><div class="metric-label">Custo unitário</div><div class="metric-value">${fmt(r.ci_u)}</div><div class="metric-unit">por peça</div></div>
+    <div class="metric"><div class="metric-label">Frete unitário</div><div class="metric-value">${fmt(r.frete_u)}</div><div class="metric-unit">${r.frete_tot>0?fmt(r.frete_tot)+' total':'sem frete'}</div></div>
+    <div class="metric"><div class="metric-label">Preço de venda unit.</div><div class="metric-value destaque">${fmt(preco_u)}</div><div class="metric-unit">c/ frete · div ${div.toFixed(3)}</div></div>
+    <div class="metric"><div class="metric-label">Preço de venda total</div><div class="metric-value destaque">${fmt(preco_tot)}</div><div class="metric-unit">${qtd} un.</div></div>
+    <div class="metric"><div class="metric-label">Corrugado</div><div class="metric-value">${r.g.area_corr.toFixed(2)}</div><div class="metric-unit">m² · ${r.g.peso.toFixed(2)} kg/un</div></div>`;
+
+  let b=r.comp.map(([n,v])=>`<tr><td>${n}</td><td>${fmt(v)}</td></tr>`).join('');
+  b+=`<tr class="sub"><td>Custo industrial</td><td>${fmt(r.ci)}</td></tr>`;
+  b+=`<tr><td>Preço base (÷ divisor ${div.toFixed(3)})</td><td>${fmt(preco_base)}</td></tr>`;
+  if(r.frete_u>0) b+=`<tr><td>Frete (repasse, ${fmt(r.frete_tot)})</td><td>${fmt(r.frete_u)}</td></tr>`;
+  b+=`<tr class="tot"><td>Preço de venda unitário</td><td>${fmt(preco_u)}</td></tr>`;
+  document.getElementById('breakdown').innerHTML=b;
+
+  // comparação Nozomi x Offset (sem frete, mesmo pedido)
+  const faixasC=[250,500,800,1000,1200,1500,2000,3000,5000];
+  let cross=null, prev=null;
+  document.getElementById('cmpbody').innerHTML=faixasC.map(q=>{
+    const pn=custoLote(mk,q,{...o,impr:'nozomi'}).ci_u/div;
+    const po=custoLote(mk,q,{...o,impr:'offset'}).ci_u/div;
+    const win=pn<=po?'Nozomi':'Offset';
+    if(prev&&prev!==win&&!cross)cross=q; prev=win;
+    return `<tr><td>${q.toLocaleString('pt-BR')}</td><td class="${win==='Nozomi'?'win':''}">${fmt(pn)}</td><td class="${win==='Offset'?'win':''}">${fmt(po)}</td><td>${win}</td></tr>`;
+  }).join('');
+  document.getElementById('reco').textContent = cross
+    ? `Ponto de virada ≈ ${cross.toLocaleString('pt-BR')} un: até aí o Nozomi sai mais barato; acima, o offset. (Método selecionado: ${o.impr}.)`
+    : `Nesta configuração, ${prev} é o mais barato em toda a faixa. (Método selecionado: ${o.impr}.)`;
+
+  // tabela por quantidade (método selecionado)
+  const faixas=Array.from(new Set([100,250,500,1000,2000,5000,qtd])).sort((a,b)=>a-b);
+  const base=(()=>{const rr=custoLote(mk,faixas[0],o);return rr.ci_u/div+rr.frete_u;})();
+  document.getElementById('qbody').innerHTML=faixas.map(q=>{
+    const rr=custoLote(mk,q,o); const pu=rr.ci_u/div+rr.frete_u;
+    const eco=q===faixas[0]?'—':'−'+Math.round((1-pu/base)*100)+'%';
+    return `<tr class="${q===qtd?'atual':''}"><td>${q.toLocaleString('pt-BR')}</td><td>${fmt(rr.ci_u)}</td><td>${fmt(rr.frete_u)}</td><td>${fmt(pu)}</td><td>${fmt(pu*q)}</td><td class="eco">${eco}</td></tr>`;
+  }).join('');
+
+  document.getElementById('resultado').classList.add('show');
+}
+
+function sendPrompt(t){alert('A geração da proposta em PDF é feita no app M2 (Cowork). Configuração atual:\n\n'+t);}
+function gerarProposta(){
+  const m=MODELOS[document.getElementById('modelo').value];
+  sendPrompt(`Gere o memorial de cálculo completo e a proposta comercial em PDF (com imagem do display montado) para o display "${m.nome}", quantidade ${document.getElementById('qtd').value}, dólar ${document.getElementById('dolar').value}, impressão ${getToggle('impr-toggle')}, plastificação ${getToggle('acab-toggle')}, faca ${document.getElementById('faca').value}, frete modo ${getToggle('frete-toggle')}, com lucro ${document.getElementById('lucro').value}%, comissão ${document.getElementById('comissao').value}%, imposto ${document.getElementById('imposto').value}%, taxa financeira ${document.getElementById('taxa_fin').value}%/30d e prazo ${document.getElementById('prazo').value} dias.`);
+}
+
+initModelos();
+</script>
+</div></body></html>

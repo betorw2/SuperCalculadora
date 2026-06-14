@@ -1,0 +1,23 @@
+# Backups e arquivos grandes (acima do limite de 100 MB do GitHub)
+BACKUP_M2_Calculadora_*.zip
+*.zip
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Editores
+.vscode/
+.idea/
+
+# Temporários
+*.tmp
+*.log
+~$*
